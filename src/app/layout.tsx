@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: "Your hub for staying updated on all things university.",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
