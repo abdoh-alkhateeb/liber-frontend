@@ -30,17 +30,17 @@ export default function ThreadDetailPage() {
     fetchData();
   }, []);
 
-  const handleNewPost = (newPost: Post) => {
-    setPosts((prev) => [newPost, ...prev]);
-
+  const handleNewPost = async (newPost: Post) => {
     const url = `${baseUrl}/api/posts`;
-    axios.post(url, newPost);
+    const response = await axios.post(url, newPost);
+
+    setPosts((prev) => [response.data, ...prev]);
   };
 
   return thread ? (
     <div>
       <h2 className="mb-4 text-2xl font-bold capitalize">{thread.name}</h2>
-      <NewPostForm onPost={handleNewPost} />
+      <NewPostForm threadId={thread._id} onPost={handleNewPost} />
       <div className="space-y-6">
         {posts.map((post) => (
           <PostCard key={post._id} {...post} />

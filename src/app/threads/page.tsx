@@ -15,5 +15,5 @@ export default async function ThreadsPage() {
     threads = [];
   }
 
-  return threads.map((thread) => <ThreadCard key={thread._id} {...thread} />);
+  return threads.map((thread, i) => <ThreadCard key={i} {...thread} />);
 }
