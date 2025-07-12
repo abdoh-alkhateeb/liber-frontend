@@ -2,9 +2,16 @@
 
 import { useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
+import { NewCommentData } from "@/types";
 
-export default function NewCommentForm({ postId, onComment }: { postId: string; onComment: (comment: any) => void }) {
-  const { user, isLoading, error } = useUser();
+export default function NewCommentForm({
+  postId,
+  onComment,
+}: {
+  postId: string;
+  onComment: (comment: NewCommentData) => void;
+}) {
+  const { user } = useUser();
   const [content, setContent] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -14,7 +21,7 @@ export default function NewCommentForm({ postId, onComment }: { postId: string; 
 
     onComment({
       postId,
-      author: user?.email,
+      author: user?.email as string,
       content,
     });
 

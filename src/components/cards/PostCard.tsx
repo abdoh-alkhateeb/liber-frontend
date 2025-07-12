@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { IoMdPerson } from "react-icons/io";
-import { Post, Comment } from "@/types";
+import { Post, Comment, NewCommentData } from "@/types";
 import { fetchComments, createComment } from "@/lib/api";
 import CommentItem from "../CommentItem";
 import NewCommentForm from "../forms/NewCommentForm";
@@ -20,12 +20,12 @@ export default function PostCard({ _id, author, content, createdAt }: Post) {
     };
 
     fetchData();
-  }, []);
+  }, [_id]);
 
-  const handleNewComment = async (newComment: any) => {
+  const handleNewComment = async (newComment: NewCommentData) => {
     try {
       newComment = await createComment(newComment);
-      setComments((prev) => [...prev, newComment]);
+      setComments((prev) => [...prev, newComment as Comment]);
     } catch (error) {
       console.error("Error creating comment:", error);
     }

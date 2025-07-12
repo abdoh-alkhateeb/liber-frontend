@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
+import { NewPostData } from "@/types";
 
-export default function NewPostForm({ threadId, onPost }: { threadId: string; onPost: (post: any) => void }) {
-  const { user, isLoading, error } = useUser();
+export default function NewPostForm({ threadId, onPost }: { threadId: string; onPost: (post: NewPostData) => void }) {
+  const { user } = useUser();
   const [content, setContent] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -14,7 +15,7 @@ export default function NewPostForm({ threadId, onPost }: { threadId: string; on
 
     onPost({
       threadId,
-      author: user?.email,
+      author: user?.email as string,
       content,
     });
 

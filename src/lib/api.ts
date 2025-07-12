@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Thread, Post, Comment } from "../types";
+import { Thread, Post, Comment, NewPostData, NewCommentData } from "../types";
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -25,13 +25,13 @@ export async function fetchComments(postId: string): Promise<Comment[]> {
   return response.data;
 }
 
-export async function createPost(newPost: Post): Promise<Post> {
+export async function createPost(newPost: NewPostData): Promise<Post> {
   const url = `${baseUrl}/api/posts`;
   const response = await axios.post(url, newPost);
   return response.data;
 }
 
-export async function createComment(newComment: Comment): Promise<Comment> {
+export async function createComment(newComment: NewCommentData): Promise<Comment> {
   const url = `${baseUrl}/api/comments`;
   const response = await axios.post(url, newComment);
   return response.data;

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { Thread, Post } from "@/types";
+import { Thread, Post, NewPostData } from "@/types";
 import { fetchThreads, fetchPosts, createPost } from "@/lib/api";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import PostCard from "@/components/cards/PostCard";
@@ -24,12 +24,12 @@ export default function ThreadDetailPage() {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
-  const handleNewPost = async (newPost: Post) => {
+  const handleNewPost = async (newPost: NewPostData) => {
     try {
       newPost = await createPost(newPost);
-      setPosts((prev) => [newPost, ...prev]);
+      setPosts((prev) => [newPost as Post, ...prev]);
     } catch (error) {
       console.error("Error creating post:", error);
     }

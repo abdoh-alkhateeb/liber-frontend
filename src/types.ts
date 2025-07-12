@@ -7,6 +7,8 @@ export type Comment = {
   content: string;
 };
 
+export type NewCommentData = Omit<Comment, "_id" | "createdAt" | "updatedAt">;
+
 export type Post = {
   _id: string;
   createdAt: Date;
@@ -15,6 +17,8 @@ export type Post = {
   author: string;
   content: string;
 };
+
+export type NewPostData = Omit<Post, "_id" | "createdAt" | "updatedAt">;
 
 export type Thread = {
   _id: string;
