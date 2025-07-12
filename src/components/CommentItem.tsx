@@ -4,7 +4,9 @@ import { Comment } from "@/types";
 export default function CommentItem({ author, content, createdAt }: Comment) {
   return (
     <div className="flex items-start gap-3">
-      <IoMdPerson size="36" className="mt-1 rounded-full" />
+      <div className="flex-shrink-0">
+        <IoMdPerson size="36" className="mt-1 rounded-full" />
+      </div>
 
       <div>
         <p className="text-sm">
