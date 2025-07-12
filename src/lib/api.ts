@@ -3,6 +3,10 @@ import { Thread, Post, Comment } from "../types";
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
+if (!baseUrl) {
+  throw new Error("Environment variable NEXT_PUBLIC_BACKEND_URL must be set.");
+}
+
 export async function fetchThreads(): Promise<Thread[]> {
   const url = `${baseUrl}/api/threads`;
   const response = await axios.get(url);

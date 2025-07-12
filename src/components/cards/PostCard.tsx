@@ -2,12 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { IoMdPerson } from "react-icons/io";
-import axios from "axios";
 import { Post, Comment } from "@/types";
+import { fetchComments, createComment } from "@/lib/api";
 import CommentItem from "../CommentItem";
 import NewCommentForm from "../forms/NewCommentForm";
-
-const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function PostCard({ _id, author, content, createdAt }: Post) {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -15,20 +13,22 @@ export default function PostCard({ _id, author, content, createdAt }: Post) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = `${baseUrl}/api/posts/${_id}/comments`;
-        const response = await axios.get(url);
-        setComments(response.data);
-      } catch {}
+        setComments(await fetchComments(_id));
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
     };
 
     fetchData();
   }, []);
 
   const handleNewComment = async (newComment: any) => {
-    const url = `${baseUrl}/api/comments`;
-    const response = await axios.post(url, newComment);
-
-    setComments((prev) => [...prev, response.data]);
+    try {
+      newComment = await createComment(newComment);
+      setComments((prev) => [...prev, newComment]);
+    } catch (error) {
+      console.error("Error creating comment:", error);
+    }
   };
 
   return (
@@ -48,6 +48,7 @@ export default function PostCard({ _id, author, content, createdAt }: Post) {
         {comments.map((comment) => (
           <CommentItem key={comment._id} {...comment} />
         ))}
+
         <NewCommentForm postId={_id} onComment={handleNewComment} />
       </div>
     </div>

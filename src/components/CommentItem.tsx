@@ -10,6 +10,7 @@ export default function CommentItem({ author, content, createdAt }: Comment) {
         <p className="text-sm">
           <span className="font-semibold">{author}</span>: {content}
         </p>
+
         <p className="text-xs text-gray-400">{createdAt.toLocaleString()}</p>
       </div>
     </div>
